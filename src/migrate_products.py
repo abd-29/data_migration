@@ -1,7 +1,7 @@
 from databases import get_postgres_connection, get_mysql_connection
 
 
-def migrate_customers():
+def migrate_products():
     mysql_conn = get_mysql_connection()
     postgres_conn = get_postgres_connection()
 
@@ -11,36 +11,38 @@ def migrate_customers():
     try:
         mysql_cursor.execute("""
         SELECT 
-            customer_id,
-            first_name,
-            last_name,
-            email,
-            country,
+            product_id,
+            sku,
+            product_name,
+            category,
+            price,
+            stock_quantity,
             created_at,
             updated_at
-        FROM customers
-        ORDER BY customer_id
+        FROM products
+        ORDER BY product_id
         """)
 
-        customers = mysql_cursor.fetchall()
-        print(f"len(customers) = {len(customers)} clients found in MySQL")
+        products = mysql_cursor.fetchall()
+        print(f"len(products) = {len(products)} products found in MySQL")
 
         insert_query = """
-        INSERT INTO customers (
-            customer_id,
-            first_name, 
-            last_name, 
-            email, 
-            country, 
-            created_at, 
+        INSERT INTO products (
+            product_id,
+            sku,
+            product_name,
+            category,
+            price,
+            stock_quantity,
+            created_at,
             updated_at)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
 
-        postgres_cursor.executemany(insert_query, customers)
+        postgres_cursor.executemany(insert_query, products)
         postgres_conn.commit()
 
-        print(f"{len(customers)} clients TO PostgreSQL")
+        print(f"{len(products)} products TO PostgreSQL")
 
     except Exception as e:
         postgres_conn.rollback()
@@ -57,4 +59,4 @@ def migrate_customers():
 
 
 if __name__ == "__main__":
-    migrate_customers()
+    migrate_products()
