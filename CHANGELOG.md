@@ -2,6 +2,33 @@
 
 All important changes to this project will be documented in this file.
 
+# Changelog
+
+All important changes to this project will be documented in this file.
+
+## [v1.1.0] - Batch Migration and Refactoring
+
+### Added
+
+* Batch migration with a configurable batch size.
+* Idempotent migrations using PostgreSQL `ON CONFLICT`.
+* Update of existing rows during migration.
+* Generic `migrate_table()` function.
+* Shared database connection functions.
+* Centralized migration queries for all tables.
+
+### Changed
+
+* Replaced `fetchall()` with `fetchmany()` for batch processing.
+* Refactored the migration code 
+
+### Tested
+
+* Re-running the `customers` migration keeps the same number of rows.
+* Updating a customer in MySQL correctly updates the same customer in PostgreSQL.
+* Batch migration works for all existing tables
+
+
 ## **v1.0.0 - Initial Migration**
 
 ### Added
