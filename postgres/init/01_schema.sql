@@ -47,3 +47,9 @@ CREATE TABLE order_items (
         FOREIGN KEY (product_id)
         REFERENCES products(product_id)
 );
+
+CREATE TABLE migration_checkpoints (
+    table_name VARCHAR(100) PRIMARY KEY,
+    last_processed_id BIGINT NOT NULL DEFAULT 0,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
