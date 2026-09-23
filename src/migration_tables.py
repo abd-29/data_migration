@@ -10,8 +10,10 @@ SELECT_CUSTOMERS = """
                 country,
                 created_at,
                 updated_at
-            FROM customers
+            FROM customers            
+            WHERE customer_id > %s
             ORDER BY customer_id
+            LIMIT %s
         """
 
 UPSERT_CUSTOMERS = """
@@ -48,7 +50,9 @@ SELECT_PRODUCTS = """
             created_at,
             updated_at
         FROM products
+        WHERE product_id > %s
         ORDER BY product_id
+        LIMIT %s
         """
 
 UPSERT_PRODUCTS = """
@@ -84,7 +88,9 @@ SELECT_ORDERS = """
             order_date,
             updated_at
         FROM orders
+        WHERE order_id > %s
         ORDER BY order_id
+        LIMIT %s
         """
 
 UPSERT_ORDERS = """
@@ -115,7 +121,9 @@ SELECT_ORDER_ITEMS = """
             quantity,
             unit_price
         FROM order_items
+        WHERE order_item_id > %s
         ORDER BY order_item_id
+        LIMIT %s
         """
 
 UPSERT_ORDER_ITEMS = """
@@ -144,8 +152,9 @@ TABLES = [
 
 if __name__ == '__main__':
     for table_name, select_query, upsert_query in TABLES:
-        migrate_table(
-            table_name,
-            select_query,
-            upsert_query
-        )
+            migrate_table(
+                table_name,
+                select_query,
+                upsert_query
+            )
+
