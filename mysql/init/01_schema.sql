@@ -66,6 +66,9 @@ CREATE TABLE order_items (
 
     unit_price DECIMAL(10, 2) NOT NULL,
 
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
     CONSTRAINT fk_order_items_order
         FOREIGN KEY (order_id)
         REFERENCES orders(order_id),

@@ -39,6 +39,9 @@ CREATE TABLE order_items (
     quantity INTEGER NOT NULL,
     unit_price NUMERIC(10,2) NOT NULL,
 
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
     CONSTRAINT fk_order_items_order
         FOREIGN KEY (order_id)
         REFERENCES orders(order_id),
@@ -52,4 +55,9 @@ CREATE TABLE migration_checkpoints (
     table_name VARCHAR(100) PRIMARY KEY,
     last_processed_id BIGINT NOT NULL DEFAULT 0,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE migration_sync_state (
+    table_name VARCHAR(100) PRIMARY KEY,
+    last_sync TIMESTAMP NOT NULL
 );
