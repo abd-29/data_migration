@@ -1,0 +1,55 @@
+2026-09-24 15:36:57,934 | INFO | migration | customers: incremental migration starting after 2026-09-24 07:25:29.460263
+2026-09-24 15:36:57,936 | INFO | migration | customers: migration completed (0 rows processed)
+2026-09-24 15:36:57,976 | INFO | migration | products: incremental migration starting after 2026-09-24 07:25:29.513968
+2026-09-24 15:36:57,977 | INFO | migration | products: migration completed (0 rows processed)
+2026-09-24 15:36:58,025 | INFO | migration | orders: incremental migration starting after 2026-09-24 07:26:54
+2026-09-24 15:36:58,028 | INFO | migration | orders: migration completed (0 rows processed)
+2026-09-24 15:36:58,056 | INFO | migration | order_items: incremental migration starting after 2026-09-24 13:08:06
+2026-09-24 15:36:58,067 | INFO | migration | order_items: migration completed (0 rows processed)
+2026-09-24 15:43:12,092 | INFO | validation | customers: validation passed | MySQL=5000 | PostgreSQL=5000
+2026-09-24 15:43:12,096 | INFO | validation | products: validation passed | MySQL=500 | PostgreSQL=500
+2026-09-24 15:43:12,124 | INFO | validation | orders: validation passed | MySQL=20000 | PostgreSQL=20000
+2026-09-24 15:43:12,157 | INFO | validation | order_items: validation passed | MySQL=60088 | PostgreSQL=60088
+2026-09-24 16:14:37,337 | INFO | migration | customers: migration started
+2026-09-24 16:14:37,343 | INFO | migration | customers: full migration starting after checkpoint 5000
+2026-09-24 16:14:37,353 | INFO | migration | customers: 12 rows migrated | total=12 | checkpoint=10012
+2026-09-24 16:14:37,354 | WARNING | migration | customers: no new or updated rows found
+2026-09-24 16:14:37,354 | INFO | migration | customers: migration completed (12 rows processed)
+2026-09-24 16:14:37,385 | INFO | migration | products: migration started
+2026-09-24 16:14:37,388 | INFO | migration | products: incremental migration starting after 2026-09-24 07:25:29.513968
+2026-09-24 16:14:37,389 | WARNING | migration | products: no new or updated rows found
+2026-09-24 16:14:37,389 | INFO | migration | products: migration completed (0 rows processed)
+2026-09-24 16:14:37,424 | INFO | migration | orders: migration started
+2026-09-24 16:14:37,428 | INFO | migration | orders: full migration starting after checkpoint 20000
+2026-09-24 16:14:37,490 | INFO | migration | orders: 70 rows migrated | total=70 | checkpoint=20070
+2026-09-24 16:14:37,492 | WARNING | migration | orders: no new or updated rows found
+2026-09-24 16:14:37,492 | INFO | migration | orders: migration completed (70 rows processed)
+2026-09-24 16:14:37,525 | INFO | migration | order_items: migration started
+2026-09-24 16:14:37,528 | INFO | migration | order_items: full migration starting after checkpoint 60088
+2026-09-24 16:14:37,645 | INFO | migration | order_items: 231 rows migrated | total=231 | checkpoint=60319
+2026-09-24 16:14:37,646 | WARNING | migration | order_items: no new or updated rows found
+2026-09-24 16:14:37,646 | INFO | migration | order_items: migration completed (231 rows processed)
+2026-09-24 16:44:04,446 | INFO | migration | customers: migration started
+2026-09-24 16:44:04,451 | INFO | migration | customers: incremental migration starting after 2026-09-24 07:25:29.460263
+2026-09-24 16:44:04,495 | INFO | migration | customers: 32 rows synchronized | total=32 | last_sync=2026-09-24 14:43:55
+2026-09-24 16:44:04,497 | INFO | migration | customers: no new or updated rows found
+2026-09-24 16:44:04,498 | INFO | migration | customers: migration completed (32 rows processed)
+2026-09-24 16:44:04,551 | INFO | migration | products: migration started
+2026-09-24 16:44:04,556 | INFO | migration | products: incremental migration starting after 2026-09-24 07:25:29.513968
+2026-09-24 16:44:04,559 | INFO | migration | products: no new or updated rows found
+2026-09-24 16:44:04,559 | INFO | migration | products: migration completed (0 rows processed)
+2026-09-24 16:44:04,615 | INFO | migration | orders: migration started
+2026-09-24 16:44:04,618 | INFO | migration | orders: incremental migration starting after 2026-09-24 07:26:54
+2026-09-24 16:44:04,754 | INFO | migration | orders: 186 rows synchronized | total=186 | last_sync=2026-09-24 14:43:56
+2026-09-24 16:44:04,761 | INFO | migration | orders: no new or updated rows found
+2026-09-24 16:44:04,761 | INFO | migration | orders: migration completed (186 rows processed)
+2026-09-24 16:44:04,797 | INFO | migration | order_items: migration started
+2026-09-24 16:44:04,799 | INFO | migration | order_items: incremental migration starting after 2026-09-24 13:08:06
+2026-09-24 16:44:05,104 | INFO | migration | order_items: 517 rows synchronized | total=517 | last_sync=2026-09-24 14:43:56
+2026-09-24 16:44:05,118 | INFO | migration | order_items: no new or updated rows found
+2026-09-24 16:44:05,118 | INFO | migration | order_items: migration completed (517 rows processed)
+2026-09-24 16:45:02,751 | INFO | validation | customers: validation passed | MySQL=5032 | PostgreSQL=5032
+2026-09-24 16:45:02,756 | INFO | validation | products: validation passed | MySQL=500 | PostgreSQL=500
+2026-09-24 16:45:02,770 | INFO | validation | orders: validation passed | MySQL=20161 | PostgreSQL=20161
+2026-09-24 16:45:02,798 | INFO | validation | order_items: validation passed | MySQL=60605 | PostgreSQL=60605
+2026-09-24 17:07:33,615 | INFO | migration | unknown_table: incremental migration is not available

@@ -1,4 +1,4 @@
-from migration_utils import migrate_table
+from src.utils import migrate_table
 
 
 # CUSTOMERS ------------------------------------------------

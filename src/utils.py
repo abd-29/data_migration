@@ -1,5 +1,8 @@
-from databases import get_mysql_connection, get_postgres_connection
+from src.databases import get_mysql_connection, get_postgres_connection
+from src.logger import get_logger
 
+
+logger = get_logger("migration")
 
 INCREMENTAL_COLUMNS = {
     "customers": "updated_at",
@@ -10,7 +13,6 @@ INCREMENTAL_COLUMNS = {
 
 
 def migrate_table(table_name, select_query, insert_query, batch_size=1000):
-
     mysql_conn = get_mysql_connection()
     postgres_conn = get_postgres_connection()
 
@@ -20,32 +22,56 @@ def migrate_table(table_name, select_query, insert_query, batch_size=1000):
     total = 0
 
     try:
-        checkpoint = get_checkpoint(postgres_cursor, table_name)
+        logger.info(f"{table_name}: migration started")
 
-        mysql_cursor.execute(select_query, (checkpoint, batch_size))
-        remaining_rows = mysql_cursor.fetchall()
+        last_sync = get_last_sync(postgres_cursor, table_name)
 
-        if remaining_rows:
+        if last_sync is None:
             mode = "full"
-            resume_value = checkpoint
-            print(f"{table_name}: full migration starting after checkpoint {resume_value}")
+            resume_value = get_checkpoint(postgres_cursor, table_name)
+            logger.info(f"{table_name}: full migration starting after checkpoint {resume_value}")
         else:
             mode = "incremental"
-            resume_value = get_last_sync(postgres_cursor, table_name)
-
-            if resume_value is None:
-                resume_value = initialize_last_sync(postgres_cursor, table_name)
-                postgres_conn.commit()
-
-            print(f"{table_name}: incremental migration starting after {resume_value}")
+            resume_value = last_sync
+            logger.info(f"{table_name}: incremental migration starting after {resume_value}")
 
         while True:
             if mode == "full":
                 mysql_cursor.execute(select_query, (resume_value, batch_size))
-            else:
-                rows = get_incremental_rows(mysql_cursor, table_name, resume_value, batch_size)
+                rows = mysql_cursor.fetchall()
 
                 if not rows:
+                    last_sync = get_source_last_sync(mysql_cursor, table_name)
+
+                    if last_sync is not None:
+                        save_last_sync(postgres_cursor, table_name, last_sync)
+                        postgres_conn.commit()
+
+                    break
+
+                postgres_cursor.executemany(insert_query, rows)
+
+                resume_value = rows[-1][0]
+                save_checkpoint(postgres_cursor, table_name, resume_value)
+
+                postgres_conn.commit()
+                total += len(rows)
+
+                logger.info(
+                    f"{table_name}: {len(rows)} rows migrated "
+                    f"| total={total} | checkpoint={resume_value}"
+                )
+
+            else:
+                rows = get_incremental_rows(
+                    mysql_cursor,
+                    table_name,
+                    resume_value,
+                    batch_size
+                )
+
+                if not rows:
+                    logger.info(f"{table_name}: no new or updated rows found")
                     break
 
                 postgres_cursor.executemany(insert_query, rows)
@@ -56,29 +82,16 @@ def migrate_table(table_name, select_query, insert_query, batch_size=1000):
                 postgres_conn.commit()
                 total += len(rows)
 
-                print(f"{table_name}: {len(rows)} rows synchronized | total={total} | last_sync={resume_value}")
-                continue
+                logger.info(
+                    f"{table_name}: {len(rows)} rows synchronized "
+                    f"| total={total} | last_sync={resume_value}"
+                )
 
-            rows = mysql_cursor.fetchall()
-
-            if not rows:
-                break
-
-            postgres_cursor.executemany(insert_query, rows)
-
-            resume_value = rows[-1][0]
-            save_checkpoint(postgres_cursor, table_name, resume_value)
-
-            postgres_conn.commit()
-            total += len(rows)
-
-            print(f"{table_name}: {len(rows)} rows migrated | total={total} | checkpoint={resume_value}")
-
-        print(f"{table_name}: migration completed ({total} rows processed)")
+        logger.info(f"{table_name}: migration completed ({total} rows processed)")
 
     except Exception:
         postgres_conn.rollback()
-        print(f"{table_name}: ERROR DURING MIGRATION")
+        logger.exception(f"{table_name}: migration failed")
         raise
 
     finally:
@@ -92,7 +105,7 @@ def get_incremental_rows(mysql_cursor, table_name, last_sync, batch_size):
     updated_column = INCREMENTAL_COLUMNS.get(table_name)
 
     if updated_column is None:
-        print(f"{table_name}: incremental migration is not available")
+        logger.info(f"{table_name}: incremental migration is not available")
         return []
 
     query = f"""
@@ -161,10 +174,7 @@ def save_last_sync(postgres_cursor, table_name, last_sync):
     )
 
 
-def initialize_last_sync(postgres_cursor, table_name):
-    postgres_cursor.execute("SELECT CURRENT_TIMESTAMP")
-    last_sync = postgres_cursor.fetchone()[0]
-
-    save_last_sync(postgres_cursor, table_name, last_sync)
-
-    return last_sync
+def get_source_last_sync(mysql_cursor, table_name):
+    mysql_cursor.execute(f"SELECT MAX(updated_at) FROM {table_name}")
+    result = mysql_cursor.fetchone()
+    return result[0]
