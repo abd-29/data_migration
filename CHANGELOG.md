@@ -2,6 +2,26 @@
 
 All important changes to this project will be documented in this file.
 
+## [v1.2.0] - Daily Data Generation and Testing
+
+### Added
+* Daily data generation for customers, orders and order items.
+* Existing customers can place new orders.
+* Existing order statuses can be updated.
+* Incremental synchronization based on `updated_at`.
+* Logging for migration and validation.
+* Unit tests with pytest.
+
+### Changed
+* Migration mode now switches to incremental synchronization after the initial full migration.
+* New order totals are calculated from their order items.
+
+### Tested
+* MySQL and PostgreSQL row counts remain synchronized.
+* Incremental migration processes both new and updated rows.
+* Core migration utility functions pass unit tests.
+
+
 ## [v1.1.0] - Reliable Migration Pipeline
 
 ### Added
