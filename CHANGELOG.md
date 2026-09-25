@@ -2,6 +2,24 @@
 
 All important changes to this project will be documented in this file.
 
+## [v1.3.0] - Airflow Orchestration
+
+### Added
+* Apache Airflow integration with Docker.
+* Daily data pipeline DAG.
+* Automated data generation, migration and validation.
+* Airflow task dependencies.
+* Daily pipeline scheduling.
+
+### Changed
+* Database connections now support Docker environment variables.
+* Logging is compatible with Airflow task logs.
+
+### Tested
+* Data generation runs successfully from Airflow.
+* Incremental migration runs successfully from Airflow.
+* Validation runs successfully after migration.
+
 ## [v1.2.0] - Daily Data Generation and Testing
 
 ### Added
