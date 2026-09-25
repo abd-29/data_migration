@@ -33,9 +33,9 @@ services:
       - ./postgres/init:/docker-entrypoint-initdb.d
 
   airflow:
-    image: apache/airflow:3.3.2
+    build: .
     container_name: airflow
-    command: bash -c "pip install -r /opt/airflow/requirements.txt && airflow standalone"
+    command: standalone
 
     environment:
       PYTHONPATH: /opt/airflow
@@ -60,7 +60,6 @@ services:
       - ./dags:/opt/airflow/dags
       - ./src:/opt/airflow/src
       - ./config.py:/opt/airflow/config.py
-      - ./requirements.txt:/opt/airflow/requirements.txt
 
 volumes:
   mysql_data:
