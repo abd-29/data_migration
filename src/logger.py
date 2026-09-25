@@ -1,4 +1,5 @@
 import logging
+import sys
 
 from config import LOG_DIR, LOG_FILE
 
@@ -10,7 +11,7 @@ def get_logger(name):
     if not logger.handlers:
         formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(name)s | %(message)s")
 
-        console_handler = logging.StreamHandler()
+        console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setFormatter(formatter)
 
         LOG_DIR.mkdir(parents=True, exist_ok=True)

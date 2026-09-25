@@ -32,6 +32,37 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init:/docker-entrypoint-initdb.d
 
+  airflow:
+    image: apache/airflow:3.3.2
+    container_name: airflow
+    command: bash -c "pip install -r /opt/airflow/requirements.txt && airflow standalone"
+
+    environment:
+      PYTHONPATH: /opt/airflow
+
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: mysqldb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DATABASE: postgresdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+
+    ports:
+      - "8080:8080"
+
+    volumes:
+      - airflow_data:/opt/airflow
+      - ./dags:/opt/airflow/dags
+      - ./src:/opt/airflow/src
+      - ./config.py:/opt/airflow/config.py
+      - ./requirements.txt:/opt/airflow/requirements.txt
+
 volumes:
   mysql_data:
   postgres_data:
+  airflow_data:
