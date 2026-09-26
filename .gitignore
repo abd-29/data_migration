@@ -4,3 +4,5 @@ __pycache__/
 .pytest_cache/
 logs/*.log
 .env
+logs/dag_id=daily_data_pipeline
+logs/dag_processor

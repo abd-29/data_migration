@@ -23,11 +23,16 @@ def daily_data_pipeline():
     def validation_data():
         subprocess.run(["python", "/opt/airflow/src/validation.py"], check=True)
 
+    @task
+    def initialize_data():
+        subprocess.run(["python", "/opt/airflow/src/initialize.py"], check=True)
+
+    initialize = initialize_data()
     generate = generate_data()
     migrate = migrate_data()
     validate = validation_data()
 
-    generate >> migrate >> validate
+    initialize >> generate >> migrate >> validate
 
 
 daily_data_pipeline()

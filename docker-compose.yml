@@ -60,6 +60,7 @@ services:
       - ./dags:/opt/airflow/dags
       - ./src:/opt/airflow/src
       - ./config.py:/opt/airflow/config.py
+      - ./logs:/opt/airflow/logs
 
 volumes:
   mysql_data:

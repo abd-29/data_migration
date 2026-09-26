@@ -53,3 +53,26 @@
 2026-09-24 16:45:02,770 | INFO | validation | orders: validation passed | MySQL=20161 | PostgreSQL=20161
 2026-09-24 16:45:02,798 | INFO | validation | order_items: validation passed | MySQL=60605 | PostgreSQL=60605
 2026-09-24 17:07:33,615 | INFO | migration | unknown_table: incremental migration is not available
+2026-09-26 10:08:09,901 | INFO | migration | customers: migration started
+2026-09-26 10:08:09,907 | INFO | migration | customers: incremental migration starting after 2026-09-26 09:36:18
+2026-09-26 10:08:09,918 | INFO | migration | customers: 7 rows synchronized | total=7 | last_sync=2026-09-26 10:08:08
+2026-09-26 10:08:09,921 | INFO | migration | customers: no new or updated rows found
+2026-09-26 10:08:09,921 | INFO | migration | customers: migration completed (7 rows processed)
+2026-09-26 10:08:09,993 | INFO | migration | products: migration started
+2026-09-26 10:08:09,996 | INFO | migration | products: incremental migration starting after 2026-09-24 07:25:29.513968
+2026-09-26 10:08:09,998 | INFO | migration | products: no new or updated rows found
+2026-09-26 10:08:09,999 | INFO | migration | products: migration completed (0 rows processed)
+2026-09-26 10:08:10,074 | INFO | migration | orders: migration started
+2026-09-26 10:08:10,075 | INFO | migration | orders: incremental migration starting after 2026-09-26 09:36:19
+2026-09-26 10:08:10,130 | INFO | migration | orders: 115 rows synchronized | total=115 | last_sync=2026-09-26 10:08:08
+2026-09-26 10:08:10,136 | INFO | migration | orders: no new or updated rows found
+2026-09-26 10:08:10,137 | INFO | migration | orders: migration completed (115 rows processed)
+2026-09-26 10:08:10,210 | INFO | migration | order_items: migration started
+2026-09-26 10:08:10,212 | INFO | migration | order_items: incremental migration starting after 2026-09-26 09:36:19
+2026-09-26 10:08:10,305 | INFO | migration | order_items: 285 rows synchronized | total=285 | last_sync=2026-09-26 10:08:08
+2026-09-26 10:08:10,321 | INFO | migration | order_items: no new or updated rows found
+2026-09-26 10:08:10,322 | INFO | migration | order_items: migration completed (285 rows processed)
+2026-09-26 10:08:11,772 | INFO | validation | customers: validation passed | MySQL=5135 | PostgreSQL=5135
+2026-09-26 10:08:11,774 | INFO | validation | products: validation passed | MySQL=500 | PostgreSQL=500
+2026-09-26 10:08:11,784 | INFO | validation | orders: validation passed | MySQL=21040 | PostgreSQL=21040
+2026-09-26 10:08:11,804 | INFO | validation | order_items: validation passed | MySQL=63237 | PostgreSQL=63237
